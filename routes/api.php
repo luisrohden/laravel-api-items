@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Auth
+Route::post('/skills/create',[SkillController::class,'create']);
+Route::post('/skills/edit',[SkillController::class,'edit']);
+Route::post('/skills/delete',[SkillController::class,'delete']);
+//View
+Route::get('/skills',[SkillController::class,'index']);
+Route::get('/skills/{id}',[SkillController::class,'view']);
