@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Kernel;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,11 @@ class SkillController extends Controller
         'status' => 'error',
         'msg' => 'Invalid input data'
     ];
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index','view']]);
+        response()->json(['teste']);
+    }
     public function index(Request $r){
         return Skill::all();
     }
