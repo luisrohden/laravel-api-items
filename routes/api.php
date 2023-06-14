@@ -32,8 +32,9 @@ use App\Http\Controllers\AuthController;
     Route::get('/401',[AuthController::class,'unauthorized'])->name('login');
 
     //Skills
-    Route::get('/skills',[SkillController::class,'index']);
     Route::get('/skills/{id}',[SkillController::class,'view']);
+    Route::get('/skills',[SkillController::class,'index']);
 
-//
+
+
 
