@@ -12,19 +12,16 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    private $currentUser;
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login','register','unauthorized']]);
+        $this->currentUser = auth()->user();
     }
 
     public function login(Request $request)
     {
-
-
-
         $credentials = $request->only('email', 'password');
-
-
         $token = Auth::attempt($credentials);
         if (!$token) {
             return response()->json([
@@ -32,20 +29,17 @@ class AuthController extends Controller
                 'message' => 'Unauthorized',
             ], 401);
         }
-
         $user = Auth::user();
         return response()->json([
-                'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
-            ]);
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
 
     }
-
-
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -58,14 +52,11 @@ class AuthController extends Controller
                 'msg' => $validator->errors()->first(),
             ]);
         }
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-
         $token = Auth::login($user);
         return response()->json([
             'status' => 'success',
