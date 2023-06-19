@@ -22,10 +22,7 @@ I created a laravel project with a simple API to record skills, education and pr
 ###### POST / With JTW Token
 
             
-            $table->date('started_at');
-            $table->date('ended_at')->nullable();
-            $table->text('description');
-            $table->unsignedBigInteger('user_id');
+
 
 * /jobs/create JSON: {"company":"company name","position":"position name","started_at":"2020-10-01","ended_at":"2020-10-01|NULL","user_id":1,"description":"text|nullable"}
 * /jobs/edit/1 JSON: {"company":"company name|nullable","position":"position name|nullable","started_at":"2020-10-01|nullable","ended_at":"2020-10-01|NULL","user_id":1|nullable,"description":"text|nullable"}
