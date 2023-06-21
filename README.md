@@ -21,9 +21,6 @@ I created a laravel project with a simple API to record skills, education and pr
 
 ###### POST / With JTW Token
 
-            
-
-
 * /jobs/create JSON: {"company":"company name","position":"position name","started_at":"2020-10-01","ended_at":"2020-10-01|NULL","user_id":1,"description":"text|nullable"}
 * /jobs/edit/1 JSON: {"company":"company name|nullable","position":"position name|nullable","started_at":"2020-10-01|nullable","ended_at":"2020-10-01|NULL","user_id":1|nullable,"description":"text|nullable"}
 * /jobs/delete/ JSON: {"jobs":"1,2,3,30"}
@@ -31,10 +28,10 @@ I created a laravel project with a simple API to record skills, education and pr
 ### Skills 
 ##### GET / Without JTW  Token
 * /api/skills
-* /api/skills/3
+* /api/skills/{skill_id}
 ##### POST / With JTW Token
 * /api/skills/create JSON: {"title":"some title","description":"some description"}
-* /api/skills/edit JSON: {"id":1,"title":"alter title","description":"some description"}
-* /api/skills/delete JSON: {"id":1}
+* /api/skills/edit/{skill_id} JSON: {"title":"alter title","description":"some description","type":"hard|soft"}
+* /api/skills/delete/{skill_id} JSON: {"id":1}
 
 

@@ -25,8 +25,8 @@ use App\Http\Controllers\AuthController;
 //Auth Routes
     //Skills
     Route::post('/skills/create',[SkillController::class,'create']);
-    Route::post('/skills/edit',[SkillController::class,'edit']);
-    Route::post('/skills/delete',[SkillController::class,'delete']);
+    Route::post('/skills/edit/{skill_id}',[SkillController::class,'edit']);
+    Route::post('/skills/delete/{skill_id}',[SkillController::class,'delete']);
     //Jobs
     Route::post('/jobs/create',[JobsController::class,'create']);
     Route::post('/jobs/edit/{job_id}',[JobsController::class,'edit']);

@@ -42,9 +42,9 @@ class SkillController extends Controller
 
     public function edit(Request $r) :object
     {
-        $data = $r->only(['title','description','id','type']);
+        $data = $r->only(['title','description','type']);
 
-        $skill = Skill::find($data['id']);
+        $skill = Skill::find($r->skill_id);
         if(!$skill){
             return response()->json([
                 'status' => 'error',
@@ -66,14 +66,14 @@ class SkillController extends Controller
     }
     public function delete(Request $r) :object
     {
-        $data = $r->only(['id']);
-        if(!isset($data['id'])){
+
+        if(!isset($r->skill_id)){
             return response()->json([
                 'status' => 'error',
                 'msg' => 'invalid data input',
             ]);
         }
-        $skill = Skill::find($data['id']);
+        $skill = Skill::find($r->skill_id);
         if(!$skill){
             return response()->json([
                 'status' => 'error',
