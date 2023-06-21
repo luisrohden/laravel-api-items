@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Kernel;
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SkillController extends Controller
 {
     protected $currentUser;
+    private $validatingRules = [
+        'title' => 'required',
+        'type', 'required',
+        'description' => 'required|string|max:255',
+    ];
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['index','view']]);
@@ -20,27 +26,24 @@ class SkillController extends Controller
     }
     public function create(Request $r) :object
     {
-        $data = $r->only(['title','description']);
-        if(count($data) != 2){
+        $data = $r->only(['title','type','description']);
+        $validator = Validator::make($data,$this->validatingRules);
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'msg' => 'invalid data input',
+                'msg' => $validator->errors()->first(),
             ]);
         }
+
         $skill = new Skill($data);
         $skill->save();
         return $skill;
     }
 
-    public function edit(Request $r):array|object
+    public function edit(Request $r) :object
     {
-        $data = $r->only(['title','description','id']);
-        if(!isset($data['id']) || count($data) < 2 ){
-            return response()->json([
-                'status' => 'error',
-                'msg' => 'invalid data input',
-            ]);
-        }
+        $data = $r->only(['title','description','id','type']);
+
         $skill = Skill::find($data['id']);
         if(!$skill){
             return response()->json([
@@ -54,11 +57,14 @@ class SkillController extends Controller
         if(isset($data['description'])){
             $skill->description = $data['description'];
         }
+        if(isset($data['type'])){
+            $skill->type = $data['type'];
+        }
         $skill->save();
         return $skill;
 
     }
-    public function delete(Request $r):array|object
+    public function delete(Request $r) :object
     {
         $data = $r->only(['id']);
         if(!isset($data['id'])){
@@ -78,7 +84,7 @@ class SkillController extends Controller
         return $skill;
 
     }
-    public function view(Request $r) //:array|object
+    public function view(Request $r) :object
     {
         if(!isset($r->id)){
             return response()->json([
